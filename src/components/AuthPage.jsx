@@ -14,7 +14,6 @@ import { AuthContext } from "../components/AuthProvider";
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css'
 import Header from "../components/Header";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AuthPage () {
    
