@@ -45,6 +45,10 @@ export default function AuthPage () {
     const [error, setError] = useState("");
     const [flag, setFlag] = useState(false);
     const [confirmObj, setConfirmObj] = useState("");
+
+    const blueteeth = 'https://firebasestorage.googleapis.com/v0/b/booking-app-b1b60.appspot.com/o/blueteethh.jpg?alt=media&token=f4d262a7-db30-40ad-81e0-597b241a7804';
+    const teethgif = 'https://firebasestorage.googleapis.com/v0/b/booking-app-b1b60.appspot.com/o/teeth.gif?alt=media&token=055a6cd1-9d49-4fa1-afc6-31de4aaf2752'
+
     
     const handleShowPhoneLogin = () => setShowPhoneLoginModal(true);
     const setUpRecaptha = (phoneNumber) => {
@@ -195,10 +199,10 @@ export default function AuthPage () {
         <Header/>
         <Row>
             <Col>
-            <Image src="./src/assets/teeth.gif" fluid />
+            <Image src={teethgif} fluid />
             </Col>
             <Col sm={6} className="p-3"> 
-                <Image src="./src/assets/blueteethh.jpg" style={{ width: '50px', height: '50px' }}/>
+                <Image src={blueteeth} style={{ width: '50px', height: '50px' }}/>
 
                 <p className="mt-1" style={{fontSize: 60}}>Brighten Your Smile</p>
                 <h2 className="my-2" style={{fontSize: 30}}>Get Started with Your Dental Health</h2>

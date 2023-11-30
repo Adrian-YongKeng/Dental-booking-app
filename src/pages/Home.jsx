@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import { Button, Col, Container, Row } from 'react-bootstrap';
 
-const backgroundImage = './src/assets/bgimage.png'; 
+const backgroundImage = 'https://firebasestorage.googleapis.com/v0/b/booking-app-b1b60.appspot.com/o/bgimage.png?alt=media&token=3a481602-7bd9-40d1-bef2-db03efec9979'; 
 
 export default function Home() {
   const backgroundStyle = {
