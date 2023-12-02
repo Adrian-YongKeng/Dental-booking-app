@@ -2,7 +2,7 @@ import { Button, Container, Table } from "react-bootstrap";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useContext, useEffect, useState } from "react";
-import { fetchBookings } from "../features/posts/bookingsSlice";
+import { fetchBookings, resetBookings } from "../features/posts/bookingsSlice";
 import EditBooking from "../components/EditBooking";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../components/AuthProvider";
@@ -17,21 +17,23 @@ export default function Profile () {
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(null);
 
-  useEffect(() => {
-    dispatch(fetchBookings())
-    .then((result) => {
-        console.log("Bookings fetched successfully:", result);
-    })
-    .catch((error) => {
-        console.error("Error fetching bookings:", error);
-    });
-  }, [dispatch]);
+//useEffect(() => {
+//  if (currentUser) {
+//    dispatch(fetchBookings(currentUser.uid));
+//  } else {
+ //   dispatch(resetBookings()); // Clear bookings if there is no user logged in
+ // }
+//}, [currentUser, dispatch]);
 
   useEffect(() => {
     if (!currentUser) {
-        navigate('/login');
+     navigate('/login');
+    } else if (currentUser) {
+      dispatch(fetchBookings(currentUser.uid));
+    } else {
+      dispatch(resetBookings()); // Clear bookings if there is no user logged in
     }
-}, [currentUser, navigate]);
+  }, [currentUser, dispatch, navigate]);
 
   const handleEditClick = (booking) => {
     setCurrentBooking(booking);
