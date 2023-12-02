@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { updateBooking, deleteBooking, fetchBookings } from '../features/posts/bookingsSlice';
+import { AuthContext } from './AuthProvider';
 
 export default function EditBooking({ show, handleClose, bookingData }) {
   const dispatch = useDispatch();
+  const {currentUser} =useContext(AuthContext)
 
   // Set up local state for the form, initialized with the booking data
   const [formData, setFormData] = useState({
@@ -49,7 +51,7 @@ export default function EditBooking({ show, handleClose, bookingData }) {
       bookingId: bookingData.bookingid,
     }))
     .then(() => {
-      dispatch(fetchBookings());
+      dispatch(fetchBookings(currentUser.uid));
       alert('Booking updated successfully');
       handleClose();
     })
@@ -58,18 +60,7 @@ export default function EditBooking({ show, handleClose, bookingData }) {
     });
   };
 
-  //const handleDelete = () => {
-  //  if(window.confirm('Are you sure you want to cancel this booking?')) {
-  //    dispatch(deleteBooking(bookingData.bookingid))
-  //    .then(() => {
-  //      alert('Booking cancelled successfully');
-  //      handleClose();
-  //    })
-  //    .catch((error) => {
-  //      console.error('Error deleting booking:', error);
-  //    });
-  //  }
-  //};
+  
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
       try {

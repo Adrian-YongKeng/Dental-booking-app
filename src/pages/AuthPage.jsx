@@ -99,11 +99,6 @@ export default function AuthPage () {
         console.log(currentUser)
         if(currentUser) navigate("/profile");
         }, [currentUser, navigate])
-   // useEffect (() => {
-   //     if(authToken) {
-   //         navigate("/profile");
-   //     }
-   // }, [authToken, navigate]);
 
     const isStrongPassword = (password) => {
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;

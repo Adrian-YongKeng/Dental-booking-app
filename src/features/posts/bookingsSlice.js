@@ -6,15 +6,15 @@ const BASE_URL = "https://booking-system-api-yy1123.sigma-school-full-stack.repl
 //get
 export const fetchBookings = createAsyncThunk(
     'bookings/fetchBookings', 
-    async() => { //userId
-        const response = await axios.get(`${BASE_URL}/bookings`);
+    async(userid) => { //userId
+        const response = await axios.get(`${BASE_URL}/bookings/${userid}`);
         return response.data ;
     }
 );
 //addbooking
 export const addBooking = createAsyncThunk(
     "bookings/addBooking",
-    async({name, email, phoneNumber, services, comment, bookingDate, bookingTime}) => {//userId
+    async({name, email, phoneNumber, services, comment, bookingDate, bookingTime, uid}) => {//userId
         const bookingData = {
             name,
             email,
@@ -22,8 +22,8 @@ export const addBooking = createAsyncThunk(
             services,
             bookingdate: bookingDate,
             bookingtime: bookingTime,
-            comment
-            // userId
+            comment,
+            userid: uid
         }
         const response = await axios.post(`${BASE_URL}/bookings`, bookingData);
         return  response.data ;
@@ -54,7 +54,11 @@ const bookingsSlice = createSlice({
         bookings: [],
         loading: false,
   },
-  reducers: {},
+  reducers: {
+    resetBookings(state) {
+        state.bookings = [];
+      },
+  },
   extraReducers: (builder) => {
     builder
         .addCase(fetchBookings.fulfilled, (state,action) => {
@@ -75,5 +79,7 @@ const bookingsSlice = createSlice({
         })
     }
 })
+// Export the resetBookings action creator
+export const { resetBookings } = bookingsSlice.actions;
 
 export default bookingsSlice.reducer;

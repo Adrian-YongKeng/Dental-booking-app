@@ -4,16 +4,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useDispatch } from 'react-redux';
-import { addBooking } from '../features/posts/bookingsSlice';
+import { addBooking, resetBookings } from '../features/posts/bookingsSlice';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthProvider';
 import { getAuth, signOut } from 'firebase/auth';
 
 export default function Header() {
-    //const BASE_URL = "https://booking-system-api-yy1123.sigma-school-full-stack.repl.co";
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    //const [newBooking, setNewBooking] = useState("");
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -25,6 +24,7 @@ export default function Header() {
     
     const { currentUser } = useContext(AuthContext);
     const auth = getAuth();
+
 
     const handleBookNowClick = () => {
         if (currentUser) {
@@ -51,9 +51,9 @@ export default function Header() {
         // Format the time as a string
         //const formattedTime = bookingTime ? `${bookingTime}:00` : ''; 
                                                                         //:formattedDate :formattedTime
-       dispatch(addBooking({ name, email, phoneNumber, services, comment, bookingDate, bookingTime}))
+       dispatch(addBooking({ name, email, phoneNumber, services, comment, bookingDate, bookingTime, uid: currentUser.uid}))
         .then(()=> {
-            console.log('Booking successful:', { name, email, phoneNumber, services, comment, bookingDate, bookingTime } );
+            console.log('Booking successful:', { name, email, phoneNumber, services, comment, bookingDate, bookingTime , uid:currentUser.uid} );
             resetForm();
             setShowBookingModal(false);
             alert("Your booking has been confirmed.")
@@ -67,6 +67,7 @@ export default function Header() {
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
+            dispatch(resetBookings()); // Reset the bookings state on sign out
             console.log("User signed out successfully");
             navigate("/");
         }).catch((error) => {
@@ -74,6 +75,18 @@ export default function Header() {
         });
     };
 
+
+    // Define a function to get user identity (email or phone number)
+    const getUserIdentity = () => {
+        // Check if the user logged in with an email
+        if (currentUser && currentUser.email) {
+            return currentUser.email;
+        }
+        // Check if the user logged in with a phone number
+        else if (currentUser && currentUser.phoneNumber) {
+            return currentUser.phoneNumber;
+        }
+    };
     
 
     return (
@@ -104,6 +117,13 @@ export default function Header() {
                     <NavDropdown.Item href="#action/3.4">X-ray-CBCT, Panoramic</NavDropdown.Item>
                 </NavDropdown>
                 
+            </Nav>
+            <Nav>
+            {currentUser ? (
+                    <div className="navbar-text text-black me-5 fw-semibold">
+                        Welcome! {getUserIdentity()} 
+                    </div>
+                ) : null}
             </Nav>
             <Nav>
                 <Nav.Link href="https://wa.me/60176146696" target="_blank">
