@@ -65,7 +65,7 @@ export default function EditBooking({ show, handleClose, bookingData }) {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
       try {
         await dispatch(deleteBooking(bookingData.bookingid)).unwrap();
-        dispatch(fetchBookings());
+        dispatch(fetchBookings(currentUser.uid));
         handleClose();
         alert('Booking cancelled successfully');
       } catch (error) {
