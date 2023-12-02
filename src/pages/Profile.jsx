@@ -25,15 +25,14 @@ export default function Profile () {
  // }
 //}, [currentUser, dispatch]);
 
-  useEffect(() => {
-    if (!currentUser) {
-     navigate('/login');
-    } else if (currentUser) {
-      dispatch(fetchBookings(currentUser.uid));
-    } else {
-      dispatch(resetBookings()); // Clear bookings if there is no user logged in
-    }
-  }, [currentUser, dispatch, navigate]);
+useEffect(() => {
+  if (currentUser) {
+    dispatch(fetchBookings(currentUser.uid));
+  } else {
+    navigate('/login');
+    dispatch(resetBookings());
+  }
+}, [currentUser, dispatch, navigate]);
 
   const handleEditClick = (booking) => {
     setCurrentBooking(booking);
@@ -65,7 +64,7 @@ export default function Profile () {
                 </tr>
             </thead>
           <tbody>
-            {bookings && bookings.map((booking, index) => (
+            {bookings.map((booking, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{booking.name}</td>
