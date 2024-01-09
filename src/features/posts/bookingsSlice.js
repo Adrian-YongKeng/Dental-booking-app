@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-const BASE_URL = "https://booking-system-api-yy1123.sigma-school-full-stack.repl.co";
+// replit free link 
+//const BASE_URL = "https://booking-system-api-yy1123.sigma-school-full-stack.repl.co"; 
+const BASE_URL = "https://1082e204-e616-4f10-919d-d166f6d7460b-00-3tm5yrejx5s7t.teams.replit.dev"
 //get
 export const fetchBookings = createAsyncThunk(
     'bookings/fetchBookings', 

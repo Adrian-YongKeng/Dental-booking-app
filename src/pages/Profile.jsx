@@ -12,7 +12,7 @@ export default function Profile () {
   const dispatch = useDispatch();
 
   const { currentUser } = useContext(AuthContext);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(null);
